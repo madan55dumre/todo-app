@@ -1,0 +1,78 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App</title>
+    <link rel="icon" href="{% static 'logos/favicon.png' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" integrity="sha512-8bHTC73gkZ7rZ7vpqUQThUDhqcNFyYi2xgDgPDHc+GXVGHXq+xPjynxIopALmOPqzo9JZj0k6OqqewdGO3EsrQ==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+    <div class="container">
+        <div class="navbar">
+            <a href="/"><img src="{% static 'logos/logo.png' %}" alt="My image" class="logo">
+            </a>
+        </div>
+        <div class="content">
+            <form action="{% url 'add' %}" method="POST" class="ui form">
+                {% csrf_token %}
+                <div class="field">
+                    <h1>Todo Work </h1>
+                    <input type="text" placeholder="Enter a Todo" name="todo">
+                </div>
+                <button class="ui right labeled icon button btnn" type="submit" />
+                <i class="right arrow icon"></i> Add
+                </button>
+            </form>
+            <table class="ui teal table">
+                <thead class="center aligned">
+                    <tr>
+                        <th>
+                            <h3>To-do-list</h3>
+                        </th>
+                        <th>
+                            <h3>Delete</h3>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="center aligned">
+                    {% for items in data %}
+                    <tr>
+
+                        <form action="/delete/{{ items.id }}/" method="POST">
+                            {% csrf_token %}
+                            <td>
+                                <h2>{{ items.content }}</h2>
+                            </td>
+                            <td>
+                                <button type="submit" class="ui animated fade button btnn">
+                                        <div class="hidden content">Delete</div>
+                                        <div class="visible content">
+                                          <i class="trash icon"></i>
+                                </button>
+                            </td>
+                        </form>
+
+
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!--<div class="social-links">
+        <a href="">Facebook</a>
+        <a href="">Instagram</a>
+        <a href="">Twitter</a>
+        <a href="">LinkedIn</a>
+    </div>-->
+    </div>
+
+</body>
+
+</html>
